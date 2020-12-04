@@ -79,27 +79,28 @@ print(remove_odd_blocks('abcdefghijklm', 3))
 
 
 def reduce_to_fixed(word, n):
-    """
-    >>> reduce_to_fixed('abcdefghijklm', 6)
-    'bafedc'
-    """
-    pass
+    cutoff = n // 3
+    new_word = word[:n]
+    new_word = new_word[(cutoff):]+new_word[:cutoff]
+    return new_word[::-1]
+
+print(reduce_to_fixed('abcdefghijklm', 6))
 
 
-def hash_it(word):
-    """
-    >>> hash_it('morpheus')
-    'trowdo'
-    """
-    padded = pad_up_to(word, 15, 19)
-    elongated = zig_zag_concatenate(create_matrix(padded, abc_mirror(padded)))
-    rotated = rotate_right(elongated, 3000003)
-    cherry_picked = get_square_index_chars(rotated)
-    halved = remove_odd_blocks(cherry_picked, 3)
-    key = reduce_to_fixed(halved, 6)
-    return key
+# def hash_it(word):
+#     """
+#     >>> hash_it('morpheus')
+#     'trowdo'
+#     """
+#     padded = pad_up_to(word, 15, 19)
+#     elongated = zig_zag_concatenate(create_matrix(padded, abc_mirror(padded)))
+#     rotated = rotate_right(elongated, 3000003)
+#     cherry_picked = get_square_index_chars(rotated)
+#     halved = remove_odd_blocks(cherry_picked, 3)
+#     key = reduce_to_fixed(halved, 6)
+#     return key
 
 
-if __name__ == "__main__":
-    name = input("Enter your name! ").lower()
-    print(f"Your key: {hash_it(name)}")
+# if __name__ == "__main__":
+#     name = input("Enter your name! ").lower()
+#     print(f"Your key: {hash_it(name)}")
