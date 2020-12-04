@@ -1,25 +1,33 @@
 def shift_characters(word, shift):
-    """
-    >>> shift_characters('abby', 5)
-    'fggd'
-    """
-    pass
+    result = ''
+    for i in range(len(word)):
+        char = word[i]
+        result += chr((ord(char) + shift - 97) % 26 + 97)
+    return result
+
+print(shift_characters('abby', 5))
 
 
 def pad_up_to(word, shift, n):
-    """
-    >>> pad_up_to('abb', 5, 11)
-    'abbfggkllpq'
-    """
-    pass
+    new_word = word
+    while len(new_word) < n:
+        word = shift_characters(word, shift)
+        new_word += word
+    return new_word[0:n]
 
+print(pad_up_to('abb', 5, 11))
+ 
 
 def abc_mirror(word):
-    """
-    >>> abc_mirror('abcd')
-    'zyxw'
-    """
-    pass
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    omega = alphabet[::-1]
+    result = ''
+    for letter in word:
+        result += omega[alphabet.index(letter)]
+    return result
+
+    
+print(abc_mirror('abcd'))
 
 
 def create_matrix(word1, word2):
@@ -39,11 +47,10 @@ def zig_zag_concatenate(matrix):
 
 
 def rotate_right(word, n):
-    """
-    >>> rotate_right('abcdefgh', 3)
-    'fghabcde'
-    """
-    pass
+    return word[-n:] + word[: - n]
+
+print(rotate_right('abcdefgh', 3))    
+
 
 
 def get_square_index_chars(word):
