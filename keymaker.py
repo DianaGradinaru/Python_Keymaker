@@ -1,3 +1,6 @@
+from string import ascii_lowercase as alphabet
+
+
 def shift_characters(word, shift):
     result = ""
     for i in range(len(word)):
@@ -17,7 +20,7 @@ def pad_up_to(word, shift, n):
     return new_word[0:n]
 
 
-print(pad_up_to("abb", 5, 11))
+# print(pad_up_to("abb", 5, 11))
 
 
 def abc_mirror(word):
@@ -29,30 +32,38 @@ def abc_mirror(word):
     return result
 
 
-print(abc_mirror("abcd"))
+# print(abc_mirror("abcd"))
 
 
 def create_matrix(word1, word2):
-    """
-    >>> create_matrix('mamas', 'papas')
-    ['bpbph', 'mamas', 'bpbph', 'mamas', 'esesk']
-    """
-    pass
+    values = []
+    for char in word2:
+        for index, letter in enumerate(alphabet):
+            if char == letter:
+                values.append(shift_characters(word1, index))
+    return values
+
+
+# print(create_matrix("mamas", "papas"))
 
 
 def zig_zag_concatenate(matrix):
-    """
-    >>> zig_zag_concatenate(['abc', 'def', 'ghi', 'jkl'])
-    'adgjkhebcfil'
-    """
-    pass
+    result = []
+    for i in range(len(matrix) - 1):
+        for j in range(len(matrix)):
+            result.append(matrix[j][i])
+    result = result[:4] + list(reversed(result[4:8])) + result[8:]
+    return "".join(result)
+
+
+# print(zig_zag_concatenate(["abc", "def", "ghi", "jkl"]))
 
 
 def rotate_right(word, n):
     return word[-n:] + word[:-n]
 
 
-print(rotate_right("abcdefgh", 3))
+# print(rotate_right("abcdefgh", 3))
 
 
 def get_square_index_chars(word):
@@ -62,45 +73,43 @@ def get_square_index_chars(word):
             result.append(word[i])
     return "".join(result)
 
-print(get_square_index_chars("abcdefghijklm"))
 
+# print(get_square_index_chars("abcdefghijklm"))
 
 
 def remove_odd_blocks(word, block_length):
-    lst =  [word[i:i+block_length] for i in range(0, len(word), block_length)]
-    result =[]
+    lst = [word[i : i + block_length] for i in range(0, len(word), block_length)]
+    result = []
     for i in range(len(lst)):
         if i % 2 == 0:
             result.append(lst[i])
     return "".join(result)
-        
-print(remove_odd_blocks('abcdefghijklm', 3))
 
+
+# print(remove_odd_blocks("abcdefghijklm", 3))
 
 
 def reduce_to_fixed(word, n):
     cutoff = n // 3
     new_word = word[:n]
-    new_word = new_word[(cutoff):]+new_word[:cutoff]
+    new_word = new_word[(cutoff):] + new_word[:cutoff]
     return new_word[::-1]
 
-print(reduce_to_fixed('abcdefghijklm', 6))
+
+# print(reduce_to_fixed("abcdefghijklm", 6))
 
 
-# def hash_it(word):
-#     """
-#     >>> hash_it('morpheus')
-#     'trowdo'
-#     """
-#     padded = pad_up_to(word, 15, 19)
-#     elongated = zig_zag_concatenate(create_matrix(padded, abc_mirror(padded)))
-#     rotated = rotate_right(elongated, 3000003)
-#     cherry_picked = get_square_index_chars(rotated)
-#     halved = remove_odd_blocks(cherry_picked, 3)
-#     key = reduce_to_fixed(halved, 6)
-#     return key
+def hash_it(word):
+
+    padded = pad_up_to(word, 15, 19)
+    elongated = zig_zag_concatenate(create_matrix(padded, abc_mirror(padded)))
+    rotated = rotate_right(elongated, 3000003)
+    cherry_picked = get_square_index_chars(rotated)
+    halved = remove_odd_blocks(cherry_picked, 3)
+    key = reduce_to_fixed(halved, 6)
+    return key
 
 
-# if __name__ == "__main__":
-#     name = input("Enter your name! ").lower()
-#     print(f"Your key: {hash_it(name)}")
+if __name__ == "__main__":
+    name = input("Enter your name! ").lower()
+    print(f"Your key: {hash_it(name)}")
