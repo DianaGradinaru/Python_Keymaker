@@ -9,30 +9,21 @@ def shift_characters(word, shift):
     return result
 
 
-print(shift_characters("abby", 5))
-
-
 def pad_up_to(word, shift, n):
     new_word = word
     while len(new_word) < n:
         word = shift_characters(word, shift)
         new_word += word
-    return new_word[0:n]
-
-
-# print(pad_up_to("abb", 5, 11))
+    return new_word[:n]
 
 
 def abc_mirror(word):
-    alphabet = "abcdefghijklmnopqrstuvwxyz"
-    omega = alphabet[::-1]
+    alpha = "abcdefghijklmnopqrstuvwxyz"
+    omega = alpha[::-1]
     result = ""
     for letter in word:
-        result += omega[alphabet.index(letter)]
+        result += omega[alpha.index(letter)]
     return result
-
-
-# print(abc_mirror("abcd"))
 
 
 def create_matrix(word1, word2):
@@ -44,26 +35,22 @@ def create_matrix(word1, word2):
     return values
 
 
-# print(create_matrix("mamas", "papas"))
-
-
 def zig_zag_concatenate(matrix):
     result = []
     for i in range(len(matrix) - 1):
         for j in range(len(matrix)):
             result.append(matrix[j][i])
-    result = result[:4] + list(reversed(result[4:8])) + result[8:]
+    slicey = len(matrix)
+    result = (
+        result[:slicey]
+        + list(reversed(result[slicey : (slicey * 2)]))
+        + result[(slicey * 2) :]
+    )
     return "".join(result)
-
-
-# print(zig_zag_concatenate(["abc", "def", "ghi", "jkl"]))
 
 
 def rotate_right(word, n):
     return word[-n:] + word[:-n]
-
-
-# print(rotate_right("abcdefgh", 3))
 
 
 def get_square_index_chars(word):
@@ -72,9 +59,6 @@ def get_square_index_chars(word):
         if (i ** 0.5) == int(i ** 0.5):
             result.append(word[i])
     return "".join(result)
-
-
-# print(get_square_index_chars("abcdefghijklm"))
 
 
 def remove_odd_blocks(word, block_length):
@@ -86,17 +70,11 @@ def remove_odd_blocks(word, block_length):
     return "".join(result)
 
 
-# print(remove_odd_blocks("abcdefghijklm", 3))
-
-
 def reduce_to_fixed(word, n):
     cutoff = n // 3
     new_word = word[:n]
     new_word = new_word[(cutoff):] + new_word[:cutoff]
     return new_word[::-1]
-
-
-# print(reduce_to_fixed("abcdefghijklm", 6))
 
 
 def hash_it(word):
